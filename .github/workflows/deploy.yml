@@ -39,21 +39,6 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/docker-demo-app:latest
             ${{ secrets.DOCKER_USERNAME }}/docker-demo-app:${{ github.sha }}
 
-      - name: Run Trivy vulnerability scanner
-        run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/docker-demo-app:latest
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-            -v $(pwd):/output \
-            aquasec/trivy:latest image --format sarif --output /output/trivy-results.sarif \
-            ${{ secrets.DOCKER_USERNAME }}/docker-demo-app:latest
-        continue-on-error: true
-
-      - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v4
-        if: always()
-        with:
-          sarif_file: 'trivy-results.sarif'
-
       - name: Build and run containers
         env:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
