@@ -131,8 +131,8 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           LOCAL_IMAGE: ${{ steps.get-image.outputs.image }}
         run: |
-          docker tag $IMAGE_NAME $DOCKER_USERNAME/docker-demo-app:latest
-          docker tag $IMAGE_NAME $DOCKER_USERNAME/docker-demo-app:${{ github.sha }}
+          docker tag "$LOCAL_IMAGE" $DOCKER_USERNAME/docker-demo-app:latest
+          docker tag "$LOCAL_IMAGE" $DOCKER_USERNAME/docker-demo-app:${{ github.sha }}
           docker push $DOCKER_USERNAME/docker-demo-app:latest
           docker push $DOCKER_USERNAME/docker-demo-app:${{ github.sha }}
 
