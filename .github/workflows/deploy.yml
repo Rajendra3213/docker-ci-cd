@@ -98,6 +98,12 @@ jobs:
           docker compose exec -T app pytest tests/integration/ || true
         continue-on-error: true
 
+      - name: Get local image name
+        id: get-image
+        run: |
+          IMAGE_NAME=$(docker images --format "{{.Repository}}:{{.Tag}}" | grep "docker-demo.*app" | head -1)
+          echo "image=$IMAGE_NAME" >> $GITHUB_OUTPUT
+
       - name: trivy-scan
         uses: aquasecurity/trivy-action@master
         with:
@@ -123,7 +129,7 @@ jobs:
       - name: Tag and Push to Docker Hub
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          IMAGE_NAME: ${{ secrets.DOCKER_USERNAME}}/docker-demo-app:latest
+          LOCAL_IMAGE: ${{ steps.get-image.outputs.image }}
         run: |
           docker tag $IMAGE_NAME $DOCKER_USERNAME/docker-demo-app:latest
           docker tag $IMAGE_NAME $DOCKER_USERNAME/docker-demo-app:${{ github.sha }}
