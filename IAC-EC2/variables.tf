@@ -21,3 +21,14 @@ variable "instance_type" {
   type        = string
   default     = "t2.micro"
 }
+
+
+variable "access_key" {
+  description = "aws-access-key"
+  default = ""
+}
+
+variable "secret_key" {
+  description = "aws-secret-key"
+  default = ""
+}
