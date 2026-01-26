@@ -43,6 +43,9 @@ app = FastAPI()
 @app.get("/")
 def read_root():
     return {"Hello": "World with Database"}
+@app.get("/test")
+def new_endpoint():
+    return {"message": "This is a new endpoint"}
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, db: Session = Depends(get_db)):
