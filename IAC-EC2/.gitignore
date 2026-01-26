@@ -1,11 +1,6 @@
-.env
-__pycache__/
-*.pyc
-
-# Terraform
 *.tfstate
 *.tfstate.*
 .terraform/
 .terraform.lock.hcl
-*.tfvars
 *.pem
+*.tfvars

@@ -1,0 +1,4 @@
+aws_region    = "us-east-1"
+project_name  = "docker-demo"
+ami_id        = "ami-0e86e20dae9224db8" # Ubuntu 24.04 LTS us-east-1
+instance_type = "t2.micro"
